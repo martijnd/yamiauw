@@ -6,6 +6,7 @@ orders
 user_id
 created_at
 
+batch
 menu_items
 
 # Batch

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\MenuItem;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +17,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $menuItems = MenuItem::all();
+    $order = Auth::user()->orders()->first();
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    return view('dashboard', compact('menuItems', 'order'));
 })->middleware(['auth'])->name('dashboard');
+
+Route::post('/{order}/add-item/{menuItem}', function (Order $order, MenuItem $menuItem) {
+    $order->menuItems()->attach($menuItem);
+
+    return redirect()->route('dashboard');
+})->middleware(['auth'])->name('add-item');
+
+Route::get('checkout/{order}', function (Order $order) {
+    return view('checkout', compact('order'));
+})->middleware(['auth'])->name('checkout');
 
 require __DIR__.'/auth.php';

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class MenuItemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'subject_id' => Subject::factory()->create(),
+            'number' => $this->faker->numberBetween(1, 10),
+            'name' => $this->faker->word,
+            'description' => $this->faker->sentence,
+            'price' => $this->faker->randomFloat(2, 0, 100),
         ];
     }
 }

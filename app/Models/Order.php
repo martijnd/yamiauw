@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
+    public function menuItems()
+    {
+        return $this->belongsToMany(MenuItem::class);
+    }
+
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getTotalPriceAttribute()
+    {
+        return $this->menuItems->sum('price');
+    }
 }
