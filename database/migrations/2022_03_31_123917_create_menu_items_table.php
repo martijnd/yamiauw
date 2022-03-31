@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('menu_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subject_id')->constrained();
-            $table->integer('number');
             $table->string('name');
             $table->string('description');
             $table->float('price');
